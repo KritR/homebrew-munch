@@ -1,0 +1,31 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-latest
+          - ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Audit formula
+        run: brew audit --strict --online ./Formula/munch.rb
+
+      - name: Install formula
+        run: brew install --formula ./Formula/munch.rb
+
+      - name: Test formula
+        run: brew test munch
