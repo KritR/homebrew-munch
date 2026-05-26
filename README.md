@@ -1,18 +1,18 @@
 # homebrew-munch
 
-Homebrew tap for [`munch`](https://github.com/KritR/munch).
+Homebrew tap for the macOS cask of [`munch`](https://github.com/KritR/munch).
 
 ## Install
 
 ```sh
-brew tap KritR/munch https://github.com/KritR/homebrew-munch
-brew install munch
+brew install --cask KritR/munch/munch
 ```
 
-Or in one command:
+Equivalent explicit tap flow:
 
 ```sh
-brew install KritR/munch/munch
+brew tap KritR/munch https://github.com/KritR/homebrew-munch
+brew install --cask munch
 ```
 
 ## Upgrade
@@ -22,18 +22,12 @@ brew update
 brew upgrade munch
 ```
 
-## HEAD build
+## How this repo is updated
 
-To install the latest `main` branch build instead of the latest tagged release:
+This tap is intended to be updated automatically by the `munch` release workflow through GoReleaser `homebrew_casks`.
 
-```sh
-brew install --HEAD KritR/munch/munch
-```
+Tagged releases in `KritR/munch` should:
 
-## Updating the formula
-
-When `munch` ships a new GitHub release:
-
-1. Update `version` in `Formula/munch.rb`.
-2. Replace the four platform `sha256` values with the contents of the new `checksums.txt`.
-3. Push the change to this tap repository.
+1. build a signed and notarized universal macOS binary archive
+2. publish that artifact to GitHub Releases
+3. update `Casks/munch.rb` in this repository
